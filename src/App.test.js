@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+
+import { render, fireEvent } from './test-utils';
 
 import App from './App';
 
@@ -14,9 +15,7 @@ describe('App todo display tests', () => {
   });
 
   test('adds todo item from form input', () => {
-    const { getByText, getByTestId } = render(<App />, {
-      initialState: { todos: [] },
-    });
+    const { getByText, getByTestId } = render(<App />);
 
     const newTitleToAdd = 'Good Day';
     const input = getByTestId('todo-input-id');
@@ -32,7 +31,12 @@ describe('App todo display tests', () => {
 
   test('updates todo item', () => {
     const { getAllByTestId, getByTestId, getByText, queryByText } = render(
-      <App initialState={{ todos: mockedTodos }} />,
+      <App />,
+      {
+        initValues: {
+          todos: mockedTodos,
+        },
+      },
     );
 
     const newTodoTitle = 'This is a new todo title';

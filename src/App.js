@@ -1,18 +1,23 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import TodoForm from './components/TodoForm';
 import VisibleTodoList from './components/VisibleTodoList';
 
-import todoReducer, { initialState as appInitialState } from './reducers';
+import { store } from './reducers';
 
 import './App.css';
 
-const App = ({ initialState = appInitialState }) => {
-  const [appState, dispatch] = useReducer(todoReducer, initialState);
+const App = () => {
+  const appState = useContext(store);
+
+  const { dispatch } = appState;
+
+  const todos = appState.state.todos;
+  const itemToUpdate = appState.state.itemToUpdate;
 
   useEffect(() => {
-    dispatch({ type: 'DISPLAY_TODOS', todos: appState.todos });
-  }, [appState]);
+    dispatch({ type: 'DISPLAY_TODOS', todos });
+  }, [dispatch, todos]);
 
   const addTodo = (todo) => {
     dispatch({ type: 'ADD_TODO', todo });
@@ -35,8 +40,8 @@ const App = ({ initialState = appInitialState }) => {
         <TodoForm addTodo={addTodo} />
       </div>
       <VisibleTodoList
-        todos={appState.todos}
-        itemToUpdate={appState.itemToUpdate}
+        todos={todos}
+        itemToUpdate={itemToUpdate}
         selectItemToUpdate={selectItemToUpdate}
         updateTodo={updateTodo}
       />
