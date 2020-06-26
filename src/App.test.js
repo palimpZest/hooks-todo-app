@@ -3,6 +3,8 @@ import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
+import { mockedTodos } from './mocks';
+
 describe('App todo display tests', () => {
   test('renders todo title', () => {
     const { getByText } = render(<App />);
@@ -26,5 +28,28 @@ describe('App todo display tests', () => {
 
     expect(input).toBeInTheDocument();
     expect(getByText(newTitleToAdd)).toBeInTheDocument();
+  });
+
+  test('updates todo item', () => {
+    const { getAllByTestId, getByTestId, getByText, queryByText } = render(
+      <App initialState={{ todos: mockedTodos }} />,
+    );
+
+    const newTodoTitle = 'This is a new todo title';
+
+    const allVisibleItems = getAllByTestId('todo-item-id');
+    const firstTodoItem = allVisibleItems[0];
+
+    expect(getByText('Hey')).toBeVisible();
+
+    fireEvent.doubleClick(firstTodoItem);
+
+    const updateInput = getByTestId('todo-update-input-id');
+
+    fireEvent.change(updateInput, { target: { value: newTodoTitle } });
+    fireEvent.submit(updateInput);
+
+    expect(queryByText('Hey')).not.toBeInTheDocument();
+    expect(getByText(newTodoTitle)).toBeVisible();
   });
 });

@@ -1,15 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 
 import TodoForm from './components/TodoForm';
+import VisibleTodoList from './components/VisibleTodoList';
+
+import todoReducer, { initialState as appInitialState } from './reducers';
 
 import './App.css';
 
-const App = () => {
-  const [todos, setTodos] = useState([]);
+const App = ({ initialState = appInitialState }) => {
+  const [appState, dispatch] = useReducer(todoReducer, initialState);
 
   useEffect(() => {
-    setTodos(todos);
-  }, [todos]);
+    dispatch({ type: 'DISPLAY_TODOS', todos: appState.todos });
+  }, [appState]);
+
+  const addTodo = (todo) => {
+    dispatch({ type: 'ADD_TODO', todo });
+  };
+
+  const selectItemToUpdate = (itemId) => {
+    dispatch({ type: 'SELECT_ITEM_TO_UPDATE', itemId });
+  };
+
+  const updateTodo = (itemToUpdate) => {
+    dispatch({ type: 'UPDATE_TODO', itemToUpdate });
+  };
 
   return (
     <div className="App">
@@ -17,13 +32,14 @@ const App = () => {
         <h1>todos</h1> <small>(hooks)</small>
       </div>
       <div style={{ display: 'flex' }}>
-        <TodoForm todos={todos} setTodos={setTodos} />
+        <TodoForm addTodo={addTodo} />
       </div>
-      <ul>
-        {todos.map((item) => (
-          <li key={item.id}>{item.title}</li>
-        ))}
-      </ul>
+      <VisibleTodoList
+        todos={appState.todos}
+        itemToUpdate={appState.itemToUpdate}
+        selectItemToUpdate={selectItemToUpdate}
+        updateTodo={updateTodo}
+      />
     </div>
   );
 };

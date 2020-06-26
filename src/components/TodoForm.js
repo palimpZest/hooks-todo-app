@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const TodoForm = ({ setTodos, todos }) => {
+const TodoForm = ({ addTodo }) => {
   const [value, setValue] = useState('');
 
   const handleChange = (e) => {
@@ -17,7 +17,7 @@ const TodoForm = ({ setTodos, todos }) => {
       completed: false,
     };
 
-    setTodos(todos.concat(newTodo));
+    addTodo(newTodo);
     setValue('');
   };
 
