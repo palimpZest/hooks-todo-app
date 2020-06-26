@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import TodoForm from './components/TodoForm';
 import VisibleTodoList from './components/VisibleTodoList';
 
-import { store } from './reducers';
+import { store } from './store';
 
 import './App.css';
 

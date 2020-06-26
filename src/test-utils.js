@@ -2,7 +2,7 @@
 import React from 'react';
 import { render as rtlRender } from '@testing-library/react';
 
-import { StateProvider, initialState } from './reducers';
+import { StateProvider, initialState } from './store';
 
 function render(ui, { initValues = initialState, ...renderOptions } = {}) {
   const Wrapper = ({ children }) => (
