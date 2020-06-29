@@ -18,8 +18,11 @@ const Todo = ({ id, title, completed }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateTodo({ id: itemToUpdate, title: titleToUpdate });
-    toggleVisibleForm('');
+    if (titleToUpdate.length > 0) {
+      updateTodo({ id: itemToUpdate, title: titleToUpdate });
+      toggleVisibleForm('');
+    }
+    return;
   };
 
   const handleChange = (e) => {

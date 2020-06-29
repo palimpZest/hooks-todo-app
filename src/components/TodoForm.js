@@ -25,7 +25,12 @@ const TodoForm = () => {
     setValue('');
   };
 
-  const addTodo = (todo) => dispatch({ type: 'ADD_TODO', todo });
+  const addTodo = (todo) => {
+    if (todo.title.length > 0) {
+      dispatch({ type: 'ADD_TODO', todo });
+    }
+    return;
+  };
 
   return (
     <form onSubmit={handleSubmit}>
