@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-const Todo = ({
-  id,
-  title,
-  completed,
-  selectItemToUpdate,
-  itemToUpdate,
-  updateTodo,
-}) => {
+import { store } from '../store';
+
+const Todo = ({ id, title, completed }) => {
   const [titleToUpdate, setTitleToUpdate] = useState('');
+  const appState = useContext(store);
+  const { dispatch } = appState;
+  const itemToUpdate = appState.state.itemToUpdate;
 
   useEffect(() => {
     setTitleToUpdate(title);
@@ -27,6 +25,12 @@ const Todo = ({
   const handleChange = (e) => {
     setTitleToUpdate(e.target.value);
   };
+
+  const selectItemToUpdate = (itemId) =>
+    dispatch({ type: 'SELECT_ITEM_TO_UPDATE', itemId });
+
+  const updateTodo = (itemToUpdate) =>
+    dispatch({ type: 'UPDATE_TODO', itemToUpdate });
 
   return (
     <div

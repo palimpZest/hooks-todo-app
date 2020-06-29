@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const TodoForm = ({ addTodo }) => {
+import { store } from '../store';
+
+const TodoForm = () => {
   const [value, setValue] = useState('');
+  const appState = useContext(store);
+  const { dispatch } = appState;
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -20,6 +24,8 @@ const TodoForm = ({ addTodo }) => {
     addTodo(newTodo);
     setValue('');
   };
+
+  const addTodo = (todo) => dispatch({ type: 'ADD_TODO', todo });
 
   return (
     <form onSubmit={handleSubmit}>

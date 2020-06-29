@@ -21,13 +21,7 @@ const getVisibleTodos = (todos, filter) => {
   }
 };
 
-const VisibleTodoList = ({
-  todos,
-  filter = 'all',
-  selectItemToUpdate,
-  updateTodo,
-  itemToUpdate,
-}) => {
+const VisibleTodoList = ({ todos, filter = 'all' }) => {
   const visibleTodos = getVisibleTodos(todos, filter);
 
   return (
@@ -35,14 +29,7 @@ const VisibleTodoList = ({
       {todos &&
         visibleTodos.length > 0 &&
         visibleTodos.map((todo) => (
-          <Todo
-            key={todo.id}
-            todos={todos}
-            selectItemToUpdate={selectItemToUpdate}
-            updateTodo={updateTodo}
-            itemToUpdate={itemToUpdate}
-            {...todo}
-          />
+          <Todo key={todo.id} todos={todos} {...todo} />
         ))}
     </>
   );
