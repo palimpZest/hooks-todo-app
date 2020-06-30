@@ -31,6 +31,11 @@ const StateProvider = ({ children, initValues }) => {
                 : item,
             ),
           };
+        case 'REMOVE_TODO':
+          return {
+            ...state,
+            todos: state.todos.filter((item) => item.id !== action.itemId),
+          };
         default:
           return state;
       }

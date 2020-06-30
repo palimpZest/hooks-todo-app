@@ -57,3 +57,17 @@ describe('App todo display tests', () => {
     expect(getByText(newTodoTitle)).toBeVisible();
   });
 });
+
+test('removes todo item with button', () => {
+  const { queryByText, getByTestId } = render(<App />, {
+    initValues: {
+      todos: mockedTodos,
+    },
+  });
+  const secondMockedTodo = mockedTodos[1];
+  const button = getByTestId(`delete-button-${secondMockedTodo.id}`);
+
+  fireEvent.click(button);
+
+  expect(queryByText(secondMockedTodo.title)).not.toBeInTheDocument();
+});

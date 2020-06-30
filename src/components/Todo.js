@@ -35,6 +35,8 @@ const Todo = ({ id, title, completed }) => {
   const updateTodo = (itemToUpdate) =>
     dispatch({ type: 'UPDATE_TODO', itemToUpdate });
 
+  const handleRemove = (itemId) => dispatch({ type: 'REMOVE_TODO', itemId });
+
   return (
     <div
       style={{
@@ -61,6 +63,12 @@ const Todo = ({ id, title, completed }) => {
           {title}
         </p>
       )}
+      <button
+        data-testid={`delete-button-${id}`}
+        onClick={() => handleRemove(id)}
+      >
+        x
+      </button>
     </div>
   );
 };
