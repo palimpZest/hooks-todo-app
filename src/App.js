@@ -5,6 +5,8 @@ import VisibleTodoList from './components/VisibleTodoList';
 
 import { store } from './store';
 
+import { DISPLAY_TODOS } from './actions';
+
 import './App.css';
 
 const App = () => {
@@ -13,7 +15,7 @@ const App = () => {
   const todos = appState.state.todos;
 
   useEffect(() => {
-    dispatch({ type: 'DISPLAY_TODOS', todos });
+    dispatch({ type: DISPLAY_TODOS, todos });
   }, [dispatch, todos]);
 
   return (

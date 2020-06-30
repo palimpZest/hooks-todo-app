@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { store } from '../store';
 
+import { SELECT_ITEM_TO_UPDATE, UPDATE_TODO, REMOVE_TODO } from '../actions';
+
 const Todo = ({ id, title, completed }) => {
   const [titleToUpdate, setTitleToUpdate] = useState('');
   const appState = useContext(store);
@@ -30,12 +32,12 @@ const Todo = ({ id, title, completed }) => {
   };
 
   const selectItemToUpdate = (itemId) =>
-    dispatch({ type: 'SELECT_ITEM_TO_UPDATE', itemId });
+    dispatch({ type: SELECT_ITEM_TO_UPDATE, itemId });
 
   const updateTodo = (itemToUpdate) =>
-    dispatch({ type: 'UPDATE_TODO', itemToUpdate });
+    dispatch({ type: UPDATE_TODO, itemToUpdate });
 
-  const handleRemove = (itemId) => dispatch({ type: 'REMOVE_TODO', itemId });
+  const handleRemove = (itemId) => dispatch({ type: REMOVE_TODO, itemId });
 
   return (
     <div

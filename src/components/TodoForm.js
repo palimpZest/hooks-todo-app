@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { store } from '../store';
 
+import { ADD_TODO } from '../actions';
 const TodoForm = () => {
   const [value, setValue] = useState('');
   const appState = useContext(store);
@@ -27,7 +28,7 @@ const TodoForm = () => {
 
   const addTodo = (todo) => {
     if (todo.title.length > 0) {
-      dispatch({ type: 'ADD_TODO', todo });
+      dispatch({ type: ADD_TODO, todo });
     }
     return;
   };

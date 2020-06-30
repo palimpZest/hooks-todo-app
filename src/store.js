@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react';
+import * as actions from './actions';
 
 export const initialState = { todos: [], itemToUpdate: '' };
 
@@ -10,16 +11,16 @@ const StateProvider = ({ children, initValues }) => {
   const [state, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
-        case 'DISPLAY_TODO':
+        case actions.DISPLAY_TODOS:
           return state;
-        case 'ADD_TODO':
+        case actions.ADD_TODO:
           return { ...state, todos: state.todos.concat(action.todo) };
-        case 'SELECT_ITEM_TO_UPDATE':
+        case actions.SELECT_ITEM_TO_UPDATE:
           return {
             ...state,
             itemToUpdate: action.itemId,
           };
-        case 'UPDATE_TODO':
+        case actions.UPDATE_TODO:
           return {
             ...state,
             todos: state.todos.map((item) =>
@@ -31,7 +32,7 @@ const StateProvider = ({ children, initValues }) => {
                 : item,
             ),
           };
-        case 'REMOVE_TODO':
+        case actions.REMOVE_TODO:
           return {
             ...state,
             todos: state.todos.filter((item) => item.id !== action.itemId),
