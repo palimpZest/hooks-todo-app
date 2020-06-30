@@ -1,4 +1,6 @@
 import React, { createContext, useReducer } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+
 import * as actions from './actions';
 
 export const initialState = { todos: [], itemToUpdate: '' };
@@ -37,6 +39,11 @@ const StateProvider = ({ children, initValues }) => {
             ...state,
             todos: state.todos.filter((item) => item.id !== action.itemId),
           };
+        case actions.REMOVE_COMPLETED_TODOS:
+          return {
+            ...state,
+            todos: state.todos.filter((item) => item.completed === false),
+          };
         default:
           return state;
       }
@@ -45,7 +52,11 @@ const StateProvider = ({ children, initValues }) => {
     initValues,
   );
 
-  return <Provider value={{ state, dispatch }}>{children}</Provider>;
+  return (
+    <BrowserRouter>
+      <Provider value={{ state, dispatch }}>{children}</Provider>
+    </BrowserRouter>
+  );
 };
 
 export { store, StateProvider };

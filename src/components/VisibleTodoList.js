@@ -21,7 +21,7 @@ const getVisibleTodos = (todos, filter) => {
   }
 };
 
-const VisibleTodoList = ({ todos, filter = 'all' }) => {
+const VisibleTodoList = ({ todos, filter }) => {
   const visibleTodos = getVisibleTodos(todos, filter);
 
   return (

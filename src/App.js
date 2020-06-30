@@ -1,15 +1,16 @@
 import React, { useContext, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import TodoForm from './components/TodoForm';
 import VisibleTodoList from './components/VisibleTodoList';
+import ButtonBar from './components/ButtonBar';
 
 import { store } from './store';
-
 import { DISPLAY_TODOS } from './actions';
 
 import './App.css';
 
-const App = () => {
+const App = ({ match }) => {
   const appState = useContext(store);
   const { dispatch } = appState;
   const todos = appState.state.todos;
@@ -26,9 +27,10 @@ const App = () => {
       <div style={{ display: 'flex' }}>
         <TodoForm />
       </div>
-      <VisibleTodoList todos={todos} />
+      <VisibleTodoList todos={todos} filter={match.params.filter || 'all'} />
+      <ButtonBar todos={todos} />
     </div>
   );
 };
 
-export default App;
+export default withRouter(App);
