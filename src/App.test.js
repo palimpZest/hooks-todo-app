@@ -36,9 +36,7 @@ describe('App todo display tests', () => {
       getByText,
       queryByText,
     } = renderWithRouter(<App />, {
-      initValues: {
-        todos: mockedTodos,
-      },
+      initValues: { todos: mockedTodos },
     });
 
     const newTodoTitle = 'This is a new todo title';
@@ -61,9 +59,7 @@ describe('App todo display tests', () => {
 
   test('removes todo item with button', () => {
     const { queryByText, getByTestId } = renderWithRouter(<App />, {
-      initValues: {
-        todos: mockedTodos,
-      },
+      initValues: { todos: mockedTodos },
     });
     const secondMockedTodo = mockedTodos[1];
     const button = getByTestId(`delete-button-${secondMockedTodo.id}`);
@@ -76,8 +72,6 @@ describe('App todo display tests', () => {
   test('displays clear completed button only if completed todos are present', () => {
     const { getByTestId, queryByTestId } = renderWithRouter(<App />, {
       initValues: { todos: mockedTodos },
-      route: '/all',
-      path: '/:filter',
     });
 
     const areSomeCompleted = mockedTodos.some(
@@ -96,15 +90,58 @@ describe('App todo display tests', () => {
     expect(clearButtonAfterClick).toBe(null);
   });
 
+  test('removes all completed todo items with button', () => {
+    const { getAllByTestId, getByTestId } = renderWithRouter(<App />, {
+      initValues: { todos: mockedTodos },
+    });
+
+    const allVisibleItems = getAllByTestId('todo-item-id');
+    expect(allVisibleItems.length).toBe(5);
+
+    const clearCompletedButton = getByTestId(`button-clear-completed-id`);
+    fireEvent.click(clearCompletedButton);
+
+    const allVisibleItemsAfterClick = getAllByTestId('todo-item-id');
+    expect(allVisibleItemsAfterClick.length).toBe(2);
+  });
+
   test('renders all todos', () => {
     const { getAllByTestId } = renderWithRouter(<App />, {
       initValues: { todos: mockedTodos },
-      route: '/all',
-      path: '/:filter',
     });
 
     const allVisibleItems = getAllByTestId('todo-item-id');
 
     expect(allVisibleItems.length).toBe(5);
+  });
+
+  test('renders active todos only', () => {
+    const { getByTestId, getAllByTestId, debug } = renderWithRouter(<App />, {
+      initValues: { todos: mockedTodos },
+      route: '/all',
+      path: '/:filter',
+    });
+
+    const buttonActive = getByTestId('button-active-id');
+    fireEvent.click(buttonActive);
+
+    const allVisibleItems = getAllByTestId('todo-item-id');
+    debug();
+    expect(allVisibleItems.length).toBe(2);
+  });
+
+  test('renders completed todos only', () => {
+    const { getByTestId, getAllByTestId } = renderWithRouter(<App />, {
+      initValues: { todos: mockedTodos },
+      route: '/all',
+      path: '/:filter',
+    });
+
+    const buttonCompleted = getByTestId('button-completed-id');
+    fireEvent.click(buttonCompleted);
+
+    const allVisibleItems = getAllByTestId('todo-item-id');
+
+    expect(allVisibleItems.length).toBe(3);
   });
 });

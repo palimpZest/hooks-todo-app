@@ -10,7 +10,7 @@ import { DISPLAY_TODOS } from './actions';
 
 import './App.css';
 
-const App = ({ match }) => {
+const App = ({ match: { params } }) => {
   const appState = useContext(store);
   const { dispatch } = appState;
   const todos = appState.state.todos;
@@ -27,7 +27,7 @@ const App = ({ match }) => {
       <div style={{ display: 'flex' }}>
         <TodoForm />
       </div>
-      <VisibleTodoList todos={todos} filter={match.params.filter || 'all'} />
+      <VisibleTodoList todos={todos} filter={params.filter || 'all'} />
       <ButtonBar todos={todos} />
     </div>
   );
