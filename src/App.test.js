@@ -194,4 +194,70 @@ describe('App todo display tests', () => {
       expect(checkbox.value).toBe('active');
     });
   });
+
+  test('displays remaining items', () => {
+    const { getByTestId, getByText } = renderWithRouter(<App />, {
+      initValues: { todos: mockedTodos },
+    });
+
+    const itemsRemaining = getByText('2 items left');
+    const toogleAllButton = getByTestId('toggle-all-button-id');
+
+    fireEvent.click(toogleAllButton);
+
+    const itemsRemainingAfterToggleAllCompleted = getByText('0 items left');
+
+    fireEvent.click(toogleAllButton);
+
+    const itemsRemainingAfterToggleAllActive = getByText('5 items left');
+
+    expect(itemsRemaining).toBeVisible();
+    expect(itemsRemainingAfterToggleAllActive).toBeVisible();
+    expect(itemsRemainingAfterToggleAllCompleted).toBeVisible();
+  });
+
+  test('displays button bar only if todos are present', () => {
+    const { getByTestId, queryByTestId } = renderWithRouter(<App />, {
+      initValues: { todos: mockedTodos },
+    });
+
+    const buttonBar = getByTestId('button-bar-id');
+
+    const toogleAllButton = getByTestId('toggle-all-button-id');
+    fireEvent.click(toogleAllButton);
+
+    const clearButton = getByTestId('button-clear-completed-id');
+    fireEvent.click(clearButton);
+
+    const buttonBarAfterClicks = queryByTestId('button-bar-id');
+
+    expect(buttonBar).toBeVisible();
+    expect(buttonBarAfterClicks).not.toBeInTheDocument();
+  });
+
+  test('displays placeholder text on inputs', () => {
+    const { getByPlaceholderText } = renderWithRouter(<App />, {
+      initValues: { todos: mockedTodos },
+    });
+
+    const todoInputPlaceholder = getByPlaceholderText('What to do?');
+
+    expect(todoInputPlaceholder).toBeVisible();
+  });
+
+  test('displays current todo title as input value when selected for update', () => {
+    const { getAllByTestId, getByTestId } = renderWithRouter(<App />, {
+      initValues: { todos: mockedTodos },
+    });
+
+    const allVisibleItems = getAllByTestId('todo-item-id');
+    const firstTodoItem = allVisibleItems[0];
+    const firstTodoItemTitle = mockedTodos[0].title;
+
+    fireEvent.doubleClick(firstTodoItem);
+
+    const updateInput = getByTestId('todo-update-input-id');
+
+    expect(updateInput.value).toBe(firstTodoItemTitle);
+  });
 });
