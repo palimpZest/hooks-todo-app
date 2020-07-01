@@ -116,7 +116,7 @@ describe('App todo display tests', () => {
   });
 
   test('renders active todos only', () => {
-    const { getByTestId, getAllByTestId, debug } = renderWithRouter(<App />, {
+    const { getByTestId, getAllByTestId } = renderWithRouter(<App />, {
       initValues: { todos: mockedTodos },
       route: '/all',
       path: '/:filter',
@@ -126,7 +126,7 @@ describe('App todo display tests', () => {
     fireEvent.click(buttonActive);
 
     const allVisibleItems = getAllByTestId('todo-item-id');
-    debug();
+
     expect(allVisibleItems.length).toBe(2);
   });
 
@@ -143,5 +143,28 @@ describe('App todo display tests', () => {
     const allVisibleItems = getAllByTestId('todo-item-id');
 
     expect(allVisibleItems.length).toBe(3);
+  });
+
+  test('toggles individual todo status', () => {
+    const { getByTestId } = renderWithRouter(<App />, {
+      initValues: { todos: mockedTodos },
+      route: '/all',
+      path: '/:filter',
+    });
+
+    const mockedActiveTodoId = mockedTodos[0].id;
+    const mockedActiveTodoInput = getByTestId(
+      `checkbox-id-${mockedActiveTodoId}`,
+    );
+
+    expect(mockedActiveTodoInput.value).toBe('active');
+
+    fireEvent.click(mockedActiveTodoInput);
+
+    expect(mockedActiveTodoInput.value).toBe('completed');
+
+    fireEvent.click(mockedActiveTodoInput);
+
+    expect(mockedActiveTodoInput.value).toBe('active');
   });
 });

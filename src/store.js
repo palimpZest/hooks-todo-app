@@ -44,6 +44,18 @@ const StateProvider = ({ children, initValues }) => {
             ...state,
             todos: state.todos.filter((item) => item.completed === false),
           };
+        case actions.TOGGLE_TODO_STATUS:
+          return {
+            ...state,
+            todos: state.todos.map((item) =>
+              item.id === action.itemId
+                ? {
+                    ...item,
+                    completed: !item.completed,
+                  }
+                : item,
+            ),
+          };
         default:
           return state;
       }
