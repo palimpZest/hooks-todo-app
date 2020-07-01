@@ -6,7 +6,9 @@ import VisibleTodoList from './components/VisibleTodoList';
 import ButtonBar from './components/ButtonBar';
 
 import { store } from './store';
-import { DISPLAY_TODOS, TOGGLE_EVERY_TODO_STATUS } from './actions';
+import { TOGGLE_EVERY_TODO_STATUS } from './actions';
+
+import { saveState } from './helpers';
 
 import './App.css';
 
@@ -16,8 +18,8 @@ const App = ({ match: { params } }) => {
   const todos = appState.state.todos;
 
   useEffect(() => {
-    dispatch({ type: DISPLAY_TODOS, todos });
-  }, [dispatch, todos]);
+    saveState(appState);
+  }, [appState, dispatch, todos]);
 
   const toogleEveryTodoStatus = () => {
     dispatch({ type: TOGGLE_EVERY_TODO_STATUS });

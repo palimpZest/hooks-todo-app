@@ -3,7 +3,11 @@ import { BrowserRouter } from 'react-router-dom';
 
 import * as actions from './actions';
 
-export const initialState = { todos: [], itemToUpdate: '' };
+import { loadState } from './helpers';
+
+const savedState = loadState();
+
+export const initialState = savedState || { todos: [], itemToUpdate: '' };
 
 const store = createContext(initialState);
 
@@ -13,8 +17,6 @@ const StateProvider = ({ children, initValues }) => {
   const [state, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
-        case actions.DISPLAY_TODOS:
-          return state;
         case actions.ADD_TODO:
           return { ...state, todos: state.todos.concat(action.todo) };
         case actions.SELECT_ITEM_TO_UPDATE:
