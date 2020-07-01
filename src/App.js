@@ -6,7 +6,7 @@ import VisibleTodoList from './components/VisibleTodoList';
 import ButtonBar from './components/ButtonBar';
 
 import { store } from './store';
-import { DISPLAY_TODOS } from './actions';
+import { DISPLAY_TODOS, TOGGLE_EVERY_TODO_STATUS } from './actions';
 
 import './App.css';
 
@@ -19,12 +19,22 @@ const App = ({ match: { params } }) => {
     dispatch({ type: DISPLAY_TODOS, todos });
   }, [dispatch, todos]);
 
+  const toogleEveryTodoStatus = () => {
+    dispatch({ type: TOGGLE_EVERY_TODO_STATUS });
+  };
+
   return (
     <div className="App">
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <h1>todos</h1> <small>(hooks)</small>
       </div>
       <div style={{ display: 'flex' }}>
+        <button
+          data-testid="toggle-all-button-id"
+          onClick={toogleEveryTodoStatus}
+        >
+          v
+        </button>
         <TodoForm />
       </div>
       <VisibleTodoList todos={todos} filter={params.filter || 'all'} />

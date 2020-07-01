@@ -167,4 +167,31 @@ describe('App todo display tests', () => {
 
     expect(mockedActiveTodoInput.value).toBe('active');
   });
+
+  test('toggles every todo status', () => {
+    const { getByTestId, queryAllByRole } = renderWithRouter(<App />, {
+      initValues: { todos: mockedTodos },
+      route: '/all',
+      path: '/:filter',
+    });
+
+    const hasActiveTodos = mockedTodos.some((item) => item.completed === false);
+    expect(hasActiveTodos).toBe(true);
+
+    const toogleAllButton = getByTestId('toggle-all-button-id');
+
+    fireEvent.click(toogleAllButton);
+
+    const everyCheckbox = queryAllByRole('checkbox');
+    everyCheckbox.forEach((checkbox) => {
+      expect(checkbox.value).toBe('completed');
+    });
+
+    fireEvent.click(toogleAllButton);
+
+    const everyCheckboxAfterClick = queryAllByRole('checkbox');
+    everyCheckboxAfterClick.forEach((checkbox) => {
+      expect(checkbox.value).toBe('active');
+    });
+  });
 });

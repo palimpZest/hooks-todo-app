@@ -56,6 +56,18 @@ const StateProvider = ({ children, initValues }) => {
                 : item,
             ),
           };
+        case actions.TOGGLE_EVERY_TODO_STATUS:
+          const hasActiveTodos = state.todos.some(
+            (item) => item.completed === false,
+          );
+          return {
+            ...state,
+            todos: state.todos.map((item) =>
+              hasActiveTodos
+                ? { ...item, completed: true }
+                : { ...item, completed: false },
+            ),
+          };
         default:
           return state;
       }
