@@ -10,7 +10,7 @@ describe('App todo display tests', () => {
   test('renders todo title', () => {
     const { getByText } = renderWithRouter(<App />);
 
-    const linkElement = getByText(/todos/i);
+    const linkElement = getByText(/tasker/i);
     expect(linkElement).toBeInTheDocument();
   });
 
@@ -240,7 +240,9 @@ describe('App todo display tests', () => {
       initValues: { todos: mockedTodos },
     });
 
-    const todoInputPlaceholder = getByPlaceholderText('What to do?');
+    const todoInputPlaceholder = getByPlaceholderText(
+      'What do you want to do today ?',
+    );
 
     expect(todoInputPlaceholder).toBeVisible();
   });

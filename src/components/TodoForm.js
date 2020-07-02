@@ -36,12 +36,13 @@ const TodoForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <input
+        className="todo-input"
         data-testid="todo-input-id"
         type="text"
         autoFocus
         value={value}
         onChange={handleChange}
-        placeholder="What to do?"
+        placeholder="What do you want to do today ?"
       />
     </form>
   );

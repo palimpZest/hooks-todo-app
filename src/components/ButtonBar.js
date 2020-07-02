@@ -23,29 +23,33 @@ const ButtonBar = ({ todos }) => {
   return (
     <>
       {hasTodos && (
-        <div data-testid="button-bar-id">
-          <div>{activeItems} items left</div>
-          <FilterLink filter={VisibilityFilters.SHOW_ALL_TODOS}>
-            <button>All</button>
-          </FilterLink>
+        <>
+          <div data-testid="button-bar-id" className="button-bar">
+            <div>
+              <FilterLink filter={VisibilityFilters.SHOW_ALL_TODOS}>
+                <button>All</button>
+              </FilterLink>
 
-          <FilterLink filter={VisibilityFilters.SHOW_ACTIVE_TODOS}>
-            <button data-testid="button-active-id">Active</button>
-          </FilterLink>
+              <FilterLink filter={VisibilityFilters.SHOW_ACTIVE_TODOS}>
+                <button data-testid="button-active-id">Active</button>
+              </FilterLink>
 
-          <FilterLink filter={VisibilityFilters.SHOW_COMPLETED_TODOS}>
-            <button data-testid="button-completed-id">Completed</button>
-          </FilterLink>
+              <FilterLink filter={VisibilityFilters.SHOW_COMPLETED_TODOS}>
+                <button data-testid="button-completed-id">Completed</button>
+              </FilterLink>
 
-          {areSomeCompleted && (
-            <button
-              data-testid="button-clear-completed-id"
-              onClick={() => handleClearCompleted()}
-            >
-              Clear completed
-            </button>
-          )}
-        </div>
+              {areSomeCompleted && (
+                <button
+                  data-testid="button-clear-completed-id"
+                  onClick={() => handleClearCompleted()}
+                >
+                  Clear completed
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="items-left">{activeItems} items left</div>
+        </>
       )}
     </>
   );
