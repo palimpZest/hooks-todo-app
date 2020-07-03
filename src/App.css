@@ -267,3 +267,41 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+@media only screen and (max-width: 395px) {
+  .todo-input-holder,
+  .items-left,
+  .button-bar,
+  .todo-holder {
+    width: 100vw;
+  }
+  .todo-input,
+  .todo-update-input {
+    width: 80vw;
+    font-size: 16px;
+  }
+  .toggle-all-button,
+  .todo-toogle-input {
+    width: 20vw;
+  }
+  .text-logo {
+    font-size: 90px;
+    width: 100vw;
+    height: 95px;
+  }
+  .button-bar button {
+    font-size: 15px;
+    margin: 2px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .button-bar button {
+    font-size: 12px;
+    margin: 2px;
+  }
+  .todo-input,
+  .todo-update-input {
+    font-size: 14px;
+  }
+}
